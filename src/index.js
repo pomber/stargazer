@@ -6,7 +6,7 @@ function RemotionVideo() {
     <Composition
       id="main"
       component={Video}
-      durationInFrames={60 * 5}
+      durationInFrames={60 * 8}
       fps={30}
       width={1280 / 2.5}
       height={720 / 2.5}
