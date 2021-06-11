@@ -1,14 +1,11 @@
 import { useCurrentFrame, useVideoConfig } from "remotion";
 import { RepoHeader } from "./repo-header";
-import { fetchStargazers } from "./fetch";
 import { useProgress } from "./nerd";
 import { Img } from "remotion";
 
-export function Video({ repoOrg, repoName, starCount }) {
+export function Video({ repoOrg, repoName, starCount, stargazers }) {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
-
-  const stargazers = fetchStargazers(repoOrg, repoName, starCount);
 
   const extraEnding = 1 * fps;
 
