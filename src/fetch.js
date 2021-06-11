@@ -5,7 +5,10 @@ export async function fetchStargazers(repoOrg, repoName, starCount) {
 
   while (starsLeft > 0) {
     const count = Math.min(starsLeft, 100);
-    const [newCursor, page] = await fetchPage(repoOrg, repoName, count, cursor);
+    const result = await fetchPage(repoOrg, repoName, count, cursor);
+    if (!result) return result;
+
+    const [newCursor, page] = result;
     allStargazers = [...allStargazers, ...page];
     cursor = newCursor;
     if (page.length < count) {
