@@ -49,6 +49,13 @@ function Content({ stargazers, repoOrg, repoName, progress }) {
 }
 
 function StarBox({ avatarUrl, name, date, repoName, y }) {
+  const d = new Date(date);
+  const dateString = d.toLocaleDateString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+  });
+
   return (
     <div
       style={{
@@ -87,7 +94,7 @@ function StarBox({ avatarUrl, name, date, repoName, y }) {
         </h3>
         <div>
           starred <b>{repoName}</b>{" "}
-          <span style={{ color: "#586069" }}>on May 20, 2013</span>
+          <span style={{ color: "#586069" }}>on {dateString}</span>
         </div>
       </div>
     </div>
