@@ -1,10 +1,6 @@
-import result from "./data";
-
-// console.log(process.env);
-
 export function fetchStargazers(repoOrg, repoName, starCount) {
   const query = `{
-    repository(owner: "code-hike", name: "codehike") {
+    repository(owner: "${repoOrg}", name: "${repoName}") {
       stargazers(first: 100) {
         edges {
           starredAt
@@ -22,7 +18,7 @@ export function fetchStargazers(repoOrg, repoName, starCount) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      authorization: "token x",
+      authorization: "token " + process.env.GITHUB_TOKEN,
     },
     body: JSON.stringify({ query }),
   })
