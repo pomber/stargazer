@@ -27,7 +27,7 @@ jobs:
       - run: npm run build -- --props="$WORKFLOW_INPUT"
         env:
           WORKFLOW_INPUT: ${{ toJson(github.event.inputs) }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REMOTION_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v2
         with:
           name: out.mp4

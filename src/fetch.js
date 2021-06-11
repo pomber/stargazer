@@ -17,16 +17,16 @@ export function fetchStargazers(repoOrg, repoName, starCount) {
 
   console.log(
     "t:",
-    !process.env.GITHUB_TOKEN
+    !process.env.REMOTION_GITHUB_TOKEN
       ? "No token"
-      : process.env.GITHUB_TOKEN.slice(0, 4)
+      : process.env.REMOTION_GITHUB_TOKEN.slice(0, 4)
   );
 
   return fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      authorization: "token " + process.env.GITHUB_TOKEN,
+      authorization: "token " + process.env.REMOTION_GITHUB_TOKEN,
     },
     body: JSON.stringify({ query }),
   })
