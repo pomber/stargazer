@@ -9,7 +9,6 @@ export function useProgress(frame, totalFrames, totalStars, fps) {
 
 function useTable(totalFrames, totalStars, fps) {
   return React.useMemo(() => {
-    console.log("calc");
     const table = [];
     let px = 0;
     let pv = 0;

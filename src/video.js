@@ -2,6 +2,7 @@ import { useCurrentFrame, useVideoConfig } from "remotion";
 import { RepoHeader } from "./repo-header";
 import { fetchStargazers } from "./fetch";
 import { useProgress } from "./nerd";
+import { Img } from "remotion";
 
 export function Video({ repoOrg, repoName, starCount }) {
   const frame = useCurrentFrame();
@@ -28,16 +29,19 @@ function Content({ stargazers, repoOrg, repoName, progress }) {
 
   return (
     <div style={{ flex: 1, backgroundColor: "#f6f8fa", position: "relative" }}>
-      {stargazers.map((stargazer, index) => (
-        <StarBox
-          avatarUrl={stargazer.avatarUrl}
-          name={stargazer.name}
-          date={stargazer.date}
-          repoName={repoName}
-          y={startY - gap * index + dy}
-          key={stargazer.name}
-        />
-      ))}
+      {stargazers.map((stargazer, index) => {
+        const isHidden = Math.abs(index - progress) > 3;
+        return isHidden ? null : (
+          <StarBox
+            avatarUrl={stargazer.avatarUrl}
+            name={stargazer.name}
+            date={stargazer.date}
+            repoName={repoName}
+            y={startY - gap * index + dy}
+            key={stargazer.name}
+          />
+        );
+      })}
 
       <RepoHeader stars={Math.round(progress)} org={repoOrg} name={repoName} />
     </div>
@@ -61,7 +65,7 @@ function StarBox({ avatarUrl, name, date, repoName, y }) {
         transform: `translateY(${y}px)`,
       }}
     >
-      <img
+      <Img
         width="64"
         height="64"
         src={avatarUrl}
