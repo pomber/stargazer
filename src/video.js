@@ -10,7 +10,14 @@ export function Video({ repoOrg, repoName, starCount }) {
 
   const stargazers = fetchStargazers(repoOrg, repoName, starCount);
 
-  const progress = useProgress(frame, durationInFrames, stargazers.length, fps);
+  const extraEnding = 1 * fps;
+
+  const progress = useProgress(
+    frame,
+    durationInFrames - extraEnding,
+    stargazers.length,
+    fps
+  );
 
   return (
     <Content
@@ -39,6 +46,7 @@ function Content({ stargazers, repoOrg, repoName, progress }) {
             repoName={repoName}
             y={startY - gap * index + dy}
             key={stargazer.name}
+            starNumber={index + 1}
           />
         );
       })}
@@ -48,7 +56,7 @@ function Content({ stargazers, repoOrg, repoName, progress }) {
   );
 }
 
-function StarBox({ avatarUrl, name, date, repoName, y }) {
+function StarBox({ avatarUrl, name, date, repoName, y, starNumber }) {
   const d = new Date(date);
   const dateString = d.toLocaleDateString("en-US", {
     month: "short",
@@ -79,7 +87,12 @@ function StarBox({ avatarUrl, name, date, repoName, y }) {
         style={{ borderRadius: "50%" }}
       />
       <div
-        style={{ display: "flex", flexDirection: "column", marginLeft: "12px" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          marginLeft: "12px",
+          flex: 1,
+        }}
       >
         <h3
           style={{
@@ -95,6 +108,22 @@ function StarBox({ avatarUrl, name, date, repoName, y }) {
         <div>
           starred <b>{repoName}</b>{" "}
           <span style={{ color: "#586069" }}>on {dateString}</span>
+        </div>
+      </div>
+      <div
+        style={{
+          width: 64,
+          height: 64,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <span style={{ fontSize: "0.8em", color: "#586069" }}>Star</span>
+        <div style={{ fontSize: "1.2em" }}>
+          <span style={{ fontSize: "1em", color: "#586069" }}>#</span>
+          {starNumber}
         </div>
       </div>
     </div>
