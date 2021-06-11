@@ -3,6 +3,9 @@ import { RepoHeader } from "./repo-header";
 import { useProgress } from "./nerd";
 import { Img } from "remotion";
 
+const W = 1280 / 2.5;
+const H = 720 / 2.5;
+
 export function Video({ repoOrg, repoName, starCount, stargazers }) {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
@@ -30,9 +33,20 @@ function Content({ stargazers, repoOrg, repoName, progress }) {
   const gap = 102;
   const startY = 76 - gap;
   const dy = progress * gap;
+  const { width } = useVideoConfig();
 
   return (
-    <div style={{ flex: 1, backgroundColor: "#f6f8fa", position: "relative" }}>
+    <div
+      style={{
+        flex: 1,
+        backgroundColor: "#f6f8fa",
+        position: "relative",
+        maxWidth: W,
+        maxHeight: H,
+        transformOrigin: "top left",
+        transform: `scale(${width / W})`,
+      }}
+    >
       {stargazers.map((stargazer, index) => {
         const isHidden = Math.abs(index - progress) > 3;
         // const grow =
