@@ -8,6 +8,8 @@ import {
 import { Video } from "./video";
 import { fetchStargazers } from "./fetch";
 
+const FPS = 30;
+
 const defaultProps = {
   repoOrg: "code-hike",
   repoName: "codehike",
@@ -32,8 +34,8 @@ function RemotionVideo() {
     <Composition
       id="main"
       component={Video}
-      durationInFrames={60 * inputProps.duration}
-      fps={30}
+      durationInFrames={FPS * inputProps.duration}
+      fps={FPS}
       width={960}
       height={540}
       defaultProps={{
