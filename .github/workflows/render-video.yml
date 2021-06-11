@@ -4,15 +4,19 @@ on:
       repoOrg:
         description: "Repo Org"
         required: true
-        default: "code-hike"
+        default: "pomber"
       repoName:
         description: "Repo Name"
         required: true
-        default: "codehike"
+        default: "didact"
       starCount:
         description: "Star Count"
         required: true
         default: 100
+      duration:
+        description: "Duration (seconds)"
+        required: false
+        default: 15
 name: Render video
 jobs:
   render:

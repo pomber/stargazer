@@ -12,6 +12,7 @@ const defaultProps = {
   repoOrg: "code-hike",
   repoName: "codehike",
   starCount: 100,
+  duration: 15,
 };
 const inputProps = { ...defaultProps, ...getInputProps() };
 
@@ -31,7 +32,7 @@ function RemotionVideo() {
     <Composition
       id="main"
       component={Video}
-      durationInFrames={60 * 8}
+      durationInFrames={60 * inputProps.duration}
       fps={30}
       width={960}
       height={540}
