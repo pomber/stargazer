@@ -15,13 +15,6 @@ export function fetchStargazers(repoOrg, repoName, starCount) {
     }
   }`;
 
-  console.log(
-    "t:",
-    !process.env.REMOTION_GITHUB_TOKEN
-      ? "No token"
-      : process.env.REMOTION_GITHUB_TOKEN.slice(0, 4)
-  );
-
   return fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: {
