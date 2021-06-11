@@ -38,6 +38,10 @@ function Content({ stargazers, repoOrg, repoName, progress }) {
     <div style={{ flex: 1, backgroundColor: "#f6f8fa", position: "relative" }}>
       {stargazers.map((stargazer, index) => {
         const isHidden = Math.abs(index - progress) > 3;
+        // const grow =
+        //   index + 1 > progress ? 1 : Math.max(0, index + 2 - progress);
+        const grow = 0;
+        const opacity = Math.min(0.1 + progress - index, 1);
         return isHidden ? null : (
           <StarBox
             avatarUrl={stargazer.avatarUrl}
@@ -45,6 +49,8 @@ function Content({ stargazers, repoOrg, repoName, progress }) {
             date={stargazer.date}
             repoName={repoName}
             y={startY - gap * index + dy}
+            grow={grow}
+            opacity={opacity}
             key={stargazer.name}
             starNumber={index + 1}
           />
@@ -56,7 +62,16 @@ function Content({ stargazers, repoOrg, repoName, progress }) {
   );
 }
 
-function StarBox({ avatarUrl, name, date, repoName, y, starNumber }) {
+function StarBox({
+  avatarUrl,
+  name,
+  date,
+  repoName,
+  y,
+  starNumber,
+  grow,
+  opacity,
+}) {
   const d = new Date(date);
   const dateString = d.toLocaleDateString("en-US", {
     month: "short",
@@ -74,10 +89,11 @@ function StarBox({ avatarUrl, name, date, repoName, y, starNumber }) {
         padding: 12,
         display: "flex",
         position: "absolute",
+        opacity,
         top: 0,
         right: 24,
         left: 24,
-        transform: `translateY(${y}px)`,
+        transform: `translateY(${y}px) scale(${1 + grow * 0.07})`,
       }}
     >
       <Img

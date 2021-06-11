@@ -1,6 +1,6 @@
 import React from "react";
 
-const { sqrt, exp, sin, cos } = Math;
+const { sqrt, exp, sin, cos, pow } = Math;
 
 export function useProgress(frame, totalFrames, totalStars, fps) {
   const table = useTable(totalFrames, totalStars, fps);
@@ -17,7 +17,7 @@ function useTable(totalFrames, totalStars, fps) {
     let pv = 0;
     for (let frame = 0; frame < totalFrames; frame++) {
       const target = Math.ceil(
-        easeInOutSine(frame / (totalFrames - 1)) * totalStars
+        easeInOutCirc(frame / (totalFrames - 1)) * totalStars
       );
       const { x, v } = spring({
         x0: px,
@@ -41,9 +41,13 @@ function useTable(totalFrames, totalStars, fps) {
 function easeInOutCubic(x) {
   return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 }
-
 function easeInOutSine(x) {
   return -(Math.cos(Math.PI * x) - 1) / 2;
+}
+function easeInOutCirc(x) {
+  return x < 0.5
+    ? (1 - sqrt(1 - pow(2 * x, 2))) / 2
+    : (sqrt(1 - pow(-2 * x + 2, 2)) + 1) / 2;
 }
 
 // from  https://github.com/pomber/use-spring/blob/master/src/spring.ts
