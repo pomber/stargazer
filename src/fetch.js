@@ -9,10 +9,18 @@ export function fetchStargazers(repoOrg, repoName, starCount) {
             name
             login
           }
+          cursor
         }
       }
     }
   }`;
+
+  console.log(
+    "t:",
+    !process.env.GITHUB_TOKEN
+      ? "No token"
+      : process.env.GITHUB_TOKEN.slice(0, 4)
+  );
 
   return fetch("https://api.github.com/graphql", {
     method: "POST",
@@ -22,7 +30,14 @@ export function fetchStargazers(repoOrg, repoName, starCount) {
     },
     body: JSON.stringify({ query }),
   })
-    .then((res) => res.json())
+    .then((res) => {
+      if (!res.ok) {
+        return res.text().then((textResponse) => {
+          throw Error(`HTTP ${res.status} ${res.statusText}: ${textResponse}`);
+        });
+      }
+      return res.json();
+    })
     .then((res) => {
       const { edges } = res.data.repository.stargazers;
       return edges.map((edge) => ({
