@@ -15,7 +15,14 @@ export function RepoHeader({ stars, org, name }) {
       }}
     >
       <div className="flex-auto min-width-0 width-fit mr-3">
-        <h1 className=" d-flex flex-wrap flex-items-center break-word f3 text-normal">
+        <h1
+          className=" d-flex flex-wrap flex-items-center break-word f3 text-normal"
+          style={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
           <svg
             className="octicon octicon-repo color-text-secondary mrx"
             viewBox="0 0 16 16"
@@ -33,16 +40,28 @@ export function RepoHeader({ stars, org, name }) {
             <a
               className="url fn"
               rel="author"
-              data-hovercard-type="organization"
-              data-hovercard-url="/orgs/code-hike/hovercard"
-              href="/code-hike"
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                display: "inline-block",
+                maxWidth: 120,
+              }}
             >
               {org}
             </a>
           </span>
           <span className="mx-1 flex-self-stretch color-text-secondary">/</span>
           <strong itemProp="name" className="mr-2 flex-self-stretch">
-            <a data-pjax="#js-repo-pjax-container" href="/code-hike/codehike">
+            <a
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                display: "inline-block",
+                maxWidth: 160,
+              }}
+            >
               {name}
             </a>
           </strong>

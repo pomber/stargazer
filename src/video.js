@@ -119,6 +119,8 @@ function StarBox({
           flexDirection: "column",
           marginLeft: "12px",
           flex: 1,
+          maxWidth: 560,
+          minWidth: 0,
         }}
       >
         <h3
@@ -132,7 +134,13 @@ function StarBox({
         >
           {name}
         </h3>
-        <div>
+        <div
+          style={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
           starred <b>{repoName}</b>{" "}
           <span style={{ color: "#586069" }}>on {dateString}</span>
         </div>
