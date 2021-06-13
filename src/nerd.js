@@ -4,8 +4,8 @@ const { sqrt, exp, sin, cos, pow } = Math;
 
 export function useProgress(frame, totalFrames, totalStars, fps) {
   const table = useTable(totalFrames, totalStars, fps);
-  if (frame >= table.length) {
-    return table[table.length - 1][2];
+  if (frame >= table.length - 1) {
+    return totalStars;
   }
   return table[frame][2];
 }
