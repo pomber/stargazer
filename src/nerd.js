@@ -17,7 +17,7 @@ function useTable(totalFrames, totalStars, fps) {
     let pv = 0;
     for (let frame = 0; frame < totalFrames; frame++) {
       const target = Math.ceil(
-        easeInOutQuad(frame / (totalFrames - 1)) * totalStars
+        easeInOutCubic(frame / (totalFrames - 1)) * totalStars
       );
       const { x, v } = spring({
         x0: px,
