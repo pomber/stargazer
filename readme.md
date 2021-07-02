@@ -1,3 +1,4 @@
+Your repo reached a stars milestone? Celebrate with a video of your stargazers!
 
 ## Example
 
