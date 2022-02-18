@@ -28,10 +28,11 @@ jobs:
       - run: sudo apt update
       - run: sudo apt install ffmpeg
       - run: npm i
-      - run: npm run build -- --props="$WORKFLOW_INPUT"
+      - run: echo $WORKFLOW_INPUT > input-props.json
         env:
           WORKFLOW_INPUT: ${{ toJson(github.event.inputs) }}
           REMOTION_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: npm run build -- --props="./input-props.json"
       - uses: actions/upload-artifact@v2
         with:
           name: out.mp4
