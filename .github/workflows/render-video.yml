@@ -31,8 +31,9 @@ jobs:
       - run: echo $WORKFLOW_INPUT > input-props.json
         env:
           WORKFLOW_INPUT: ${{ toJson(github.event.inputs) }}
-          REMOTION_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm run build -- --props="./input-props.json"
+        env:
+          REMOTION_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v2
         with:
           name: out.mp4
