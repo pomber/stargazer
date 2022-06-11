@@ -2,21 +2,15 @@ import {
   Composition,
   continueRender,
   delayRender,
-  getInputProps,
   registerRoot,
+  Config,
 } from "remotion";
 import { Video } from "./video";
 import { fetchStargazers } from "./fetch";
+import { inputProps } from "./props";
 
-const FPS = 30;
-
-const defaultProps = {
-  repoOrg: "code-hike",
-  repoName: "codehike",
-  starCount: 100,
-  duration: 15,
-};
-const inputProps = { ...defaultProps, ...getInputProps() };
+// improve quality
+Config.Rendering.setImageFormat("png");
 
 function RemotionVideo() {
   const [handle] = React.useState(() => delayRender());
@@ -34,10 +28,10 @@ function RemotionVideo() {
     <Composition
       id="main"
       component={Video}
-      durationInFrames={FPS * inputProps.duration}
-      fps={FPS}
-      width={960}
-      height={540}
+      durationInFrames={inputProps.fps * inputProps.duration}
+      fps={inputProps.fps}
+      width={inputProps.width}
+      height={inputProps.height}
       defaultProps={{
         ...inputProps,
         stargazers,
