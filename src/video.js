@@ -1,16 +1,14 @@
 import { useCurrentFrame, useVideoConfig } from "remotion";
 import { RepoHeader } from "./repo-header";
 import { useProgress } from "./nerd";
+import { inputProps } from "./props";
 import { Img } from "remotion";
 
-const W = 1280 / 2.5;
-const H = 720 / 2.5;
-
-export function Video({ repoOrg, repoName, starCount, stargazers }) {
+export function Video({ repoOrg, repoName, stargazers }) {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
 
-  const extraEnding = 1 * fps;
+  const extraEnding = +fps;
 
   const progress = useProgress(
     frame,
@@ -33,7 +31,9 @@ function Content({ stargazers, repoOrg, repoName, progress }) {
   const gap = 102;
   const startY = 76 - gap;
   const dy = progress * gap;
-  const { width } = useVideoConfig();
+  const { width, height } = useVideoConfig();
+  const relativeWidth = width / inputProps.scale;
+  const relativeHeight = height / inputProps.scale;
 
   return (
     <div
@@ -41,14 +41,15 @@ function Content({ stargazers, repoOrg, repoName, progress }) {
         flex: 1,
         backgroundColor: "#f6f8fa",
         position: "relative",
-        maxWidth: W,
-        maxHeight: H,
+        maxWidth: relativeWidth,
+        maxHeight: relativeHeight,
         transformOrigin: "top left",
-        transform: `scale(${width / W})`,
+        transform: `scale(${inputProps.scale})`,
       }}
     >
       {stargazers.map((stargazer, index) => {
-        const isHidden = Math.abs(index - progress) > 3;
+        const y = startY - gap * index + dy
+        const isHidden = progress - index <= -2 || y > height;
         // const grow =
         //   index + 1 > progress ? 1 : Math.max(0, index + 2 - progress);
         const grow = 0;
@@ -57,9 +58,10 @@ function Content({ stargazers, repoOrg, repoName, progress }) {
           <StarBox
             avatarUrl={stargazer.avatarUrl}
             name={stargazer.name}
+            login={stargazer.login}
             date={stargazer.date}
             repoName={repoName}
-            y={startY - gap * index + dy}
+            y={y}
             grow={grow}
             opacity={opacity}
             key={stargazer.name}
@@ -76,6 +78,7 @@ function Content({ stargazers, repoOrg, repoName, progress }) {
 function StarBox({
   avatarUrl,
   name,
+  login,
   date,
   repoName,
   y,
@@ -119,7 +122,7 @@ function StarBox({
           flexDirection: "column",
           marginLeft: "12px",
           flex: 1,
-          maxWidth: 560,
+          // maxWidth: 560,
           minWidth: 0,
         }}
       >
@@ -128,11 +131,11 @@ function StarBox({
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
-            maxWidth: 360,
+            // maxWidth: 360,
             fontWeight: 400,
           }}
         >
-          {name}
+          <b>{name}</b> {inputProps.showLogin && login && <span style={{ color: "#586069" }}>({ login })</span>}
         </h3>
         <div
           style={{
@@ -141,7 +144,7 @@ function StarBox({
             whiteSpace: "nowrap",
           }}
         >
-          starred <b>{repoName}</b>{" "}
+          starred {inputProps.showRepo && <b>{repoName}</b>}{" "}
           <span style={{ color: "#586069" }}>on {dateString}</span>
         </div>
       </div>

@@ -1,6 +1,15 @@
 import "./gh-styles.css";
+import { inputProps } from "./props";
+
+const repoWidth = (
+    inputProps.width
+    -
+    240 * inputProps.scale  // 240 is the sum of the width of other elements and margins, etc.
+) / inputProps.scale;  // the actual width will be multiplied by the scale, so we need to divide by it here
 
 export function RepoHeader({ stars, org, name }) {
+  const repoLength = org.length + name.length;
+
   return (
     <div
       className="d-flex mb-3 px-3 px-md-4 px-lg-5"
@@ -45,7 +54,7 @@ export function RepoHeader({ stars, org, name }) {
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
                 display: "inline-block",
-                maxWidth: 120,
+                maxWidth: repoWidth * org.length / repoLength,
               }}
             >
               {org}
@@ -59,7 +68,7 @@ export function RepoHeader({ stars, org, name }) {
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
                 display: "inline-block",
-                maxWidth: 160,
+                maxWidth: repoWidth * name.length / repoLength,
               }}
             >
               {name}
