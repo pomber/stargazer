@@ -37,6 +37,12 @@ function fetchPage(repoOrg, repoName, count, cursor) {
       }
     }
   }`;
+  if (!process.env.REMOTION_GITHUB_TOKEN) {
+    throw new TypeError(
+      "You need to set a REMOTION_GITHUB_TOKEN environment variable"
+    );
+  }
+
   return fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: {
