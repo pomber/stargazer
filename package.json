@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "remotion preview src/index.js",
-    "build": "remotion render src/index.js main out.mp4 --log verbose"
+    "build": "remotion render src/index.js main out.mp4 --log verbose --timeout=120000"
   },
   "license": "UNLICENSED",
   "dependencies": {
