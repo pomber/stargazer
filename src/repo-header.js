@@ -12,6 +12,9 @@ export function RepoHeader({ stars, org, name }) {
         top: 0,
         right: 0,
         left: 0,
+        height: 70,
+        minHeight: 70,
+        maxHeight: 70,
       }}
     >
       <div className="flex-auto min-width-0 width-fit mr-3">

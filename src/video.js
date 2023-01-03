@@ -43,6 +43,7 @@ function Content({ stargazers, repoOrg, repoName, progress }) {
         position: "relative",
         maxWidth: W,
         maxHeight: H,
+        minHeight: H,
         transformOrigin: "top left",
         transform: `scale(${width / W})`,
       }}
@@ -104,6 +105,9 @@ function StarBox({
         top: 0,
         right: 24,
         left: 24,
+        height: 88,
+        minHeight: 88,
+        maxHeight: 88,
         transform: `translateY(${y}px) scale(${1 + grow * 0.07})`,
       }}
     >
