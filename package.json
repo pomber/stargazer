@@ -7,9 +7,9 @@
   },
   "license": "UNLICENSED",
   "dependencies": {
-    "@remotion/bundler": "^3.2.23",
-    "@remotion/cli": "^3.2.23",
-    "@remotion/renderer": "^3.2.23",
+    "@remotion/bundler": "^3.3.25",
+    "@remotion/cli": "^3.3.25",
+    "@remotion/renderer": "^3.3.25",
     "@types/express": "^4.17.9",
     "@types/react": "^17.0.0",
     "express": "^4.17.1",
@@ -17,7 +17,7 @@
     "prettier-plugin-organize-imports": "^1.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "remotion": "^3.2.23",
+    "remotion": "^3.3.25",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.3"
   }
