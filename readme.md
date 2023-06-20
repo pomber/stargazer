@@ -4,7 +4,7 @@ Your repo reached a stars milestone? Celebrate with a video of your stargazers!
 
 https://user-images.githubusercontent.com/1911623/121809549-93342a80-cc33-11eb-88ff-e45f8b6dace4.mp4?width=200
 
-## Make your own video
+## Make your own video (GitHub Actions)
 
 <img src="https://user-images.githubusercontent.com/1911623/121809008-75fe5c80-cc31-11eb-8f44-5df6183deca5.png" width="720"/>
 <img src="https://user-images.githubusercontent.com/1911623/121809050-ae059f80-cc31-11eb-9af9-2aa05a24bc7f.png" width="720"/>
@@ -14,15 +14,24 @@ https://user-images.githubusercontent.com/1911623/121809549-93342a80-cc33-11eb-8
 <img src="https://user-images.githubusercontent.com/1911623/121809344-cf1ac000-cc32-11eb-93c3-cc6e58ff7988.png" width="720"/>
 <img src="https://user-images.githubusercontent.com/1911623/121809394-fb364100-cc32-11eb-8a82-e9a6d25f37cf.png" width="720"/>
 
-## Dev
+## Make your own video (local)
 
-To run it locally you need a `.env` file with a GitHub personal token.
+1. [Generate a new repo from this template](https://github.com/pomber/stargazer/generate)
 
-Go to https://github.com/settings/personal-access-tokens/new and create a token with default settings.
+2. Go to https://github.com/settings/personal-access-tokens/new and create a token with default settings. Create a `.env` file and add it:
 
 ```
-REMOTION_GITHUB_TOKEN=github_pat_
+REMOTION_GITHUB_TOKEN=github_pat_...
 ```
+
+3. Install dependencies:
+
+```
+npm i
+```
+
+4. Adjust settings in `src/Root.tsx`
+5. Run `npm run build` to generate the video
 
 ## Credits
 
