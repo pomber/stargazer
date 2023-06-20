@@ -41,8 +41,15 @@ export const saveResult = ({
 	cursor: string | null;
 	result: QueryResult;
 }) => {
-	const key = makeKey({count, cursor, repoName, repoOrg});
-	window.localStorage.setItem(key, JSON.stringify(result));
+	try {
+		const key = makeKey({count, cursor, repoName, repoOrg});
+		window.localStorage.setItem(key, JSON.stringify(result));
+	} catch (err) {
+		// If quota is exceeded, don't cache
+		if (!(err as Error).message.toLowerCase().includes('quota')) {
+			throw err;
+		}
+	}
 };
 
 export const getFromCache = ({
