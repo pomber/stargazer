@@ -52,6 +52,7 @@ async function fetchPage(
       }
     }
   }`;
+
 	if (!process.env.REMOTION_GITHUB_TOKEN) {
 		throw new TypeError(
 			'You need to set a REMOTION_GITHUB_TOKEN environment variable'
@@ -62,17 +63,17 @@ async function fetchPage(
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			authorization: 'token ' + process.env.REMOTION_GITHUB_TOKEN,
+			authorization: `token ${process.env.REMOTION_GITHUB_TOKEN}`,
 		},
 		body: JSON.stringify({query}),
 	});
 	if (!res.ok) {
-		return res.text().then((textResponse) => {
-			throw Error(`HTTP ${res.status} ${res.statusText}: ${textResponse}`);
-		});
+		const textResponse = await res.text();
+		throw Error(`HTTP ${res.status} ${res.statusText}: ${textResponse}`);
 	}
-	const res1 = (await res.json()) as GitHubApiResponse;
-	const {edges} = res1.data.repository.stargazers;
+
+	const json = (await res.json()) as GitHubApiResponse;
+	const {edges} = json.data.repository.stargazers;
 	const lastCursor = edges[edges.length - 1].cursor;
 	const page: Stargazer[] = edges.map((edge): Stargazer => {
 		return {

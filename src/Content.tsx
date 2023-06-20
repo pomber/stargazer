@@ -1,47 +1,11 @@
-import {Img, useCurrentFrame, useVideoConfig} from 'remotion';
+import {Img, useVideoConfig} from 'remotion';
 import {Stargazer} from './fetch';
-import {getProgress} from './nerd';
 import {RepoHeader} from './repo-header';
 
 const W = 1280 / 2.5;
 const H = 720 / 2.5;
 
-export function Main({
-	repoOrg,
-	repoName,
-	stargazers,
-}: {
-	repoOrg: string;
-	repoName: string;
-	stargazers: Stargazer[] | null;
-}) {
-	const frame = useCurrentFrame();
-	const {fps, durationInFrames} = useVideoConfig();
-
-	const extraEnding = fps;
-
-	if (!stargazers) {
-		return null;
-	}
-
-	const progress = getProgress(
-		frame,
-		durationInFrames - extraEnding,
-		stargazers.length,
-		fps
-	);
-
-	return (
-		<Content
-			stargazers={stargazers}
-			repoOrg={repoOrg}
-			repoName={repoName}
-			progress={progress}
-		/>
-	);
-}
-
-function Content({
+export function Content({
 	stargazers,
 	repoOrg,
 	repoName,
