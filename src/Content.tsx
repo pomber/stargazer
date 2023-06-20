@@ -40,7 +40,7 @@ export function Content({
 				const opacity = Math.min(0.1 + progress - index, 1);
 				return isHidden ? null : (
 					<StarBox
-						key={stargazer.name}
+						key={stargazer.login}
 						avatarUrl={stargazer.avatarUrl}
 						name={stargazer.name}
 						date={stargazer.date}

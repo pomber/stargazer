@@ -9,6 +9,7 @@ export const stargazerSchema = z.object({
 	avatarUrl: z.string(),
 	name: z.string(),
 	date: z.string(),
+	login: z.string(),
 });
 
 export type Stargazer = z.infer<typeof stargazerSchema>;

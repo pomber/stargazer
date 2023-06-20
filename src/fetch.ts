@@ -115,6 +115,7 @@ async function fetchPage({
 			avatarUrl: edge.node.avatarUrl,
 			date: edge.starredAt,
 			name: edge.node.name || edge.node.login,
+			login: edge.node.login,
 		};
 	});
 
