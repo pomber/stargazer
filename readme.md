@@ -16,7 +16,13 @@ https://user-images.githubusercontent.com/1911623/121809549-93342a80-cc33-11eb-8
 
 ## Dev
 
-To run it locally you need a `.env` file with a github token var `REMOTION_GITHUB_TOKEN`
+To run it locally you need a `.env` file with a GitHub personal token.
+
+Go to https://github.com/settings/personal-access-tokens/new and create a token with default settings.
+
+```
+REMOTION_GITHUB_TOKEN=github_pat_
+```
 
 ## Credits
 

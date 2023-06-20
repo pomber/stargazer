@@ -1,7 +1,17 @@
-export async function fetchStargazers(repoOrg, repoName, starCount) {
+export type Stargazer = {
+  avatarUrl: string;
+  name: string;
+  date: string;
+};
+
+export async function fetchStargazers(
+  repoOrg: string,
+  repoName: string,
+  starCount: number
+) {
   let starsLeft = starCount;
   let cursor = null;
-  let allStargazers = [];
+  let allStargazers: Stargazer[] = [];
 
   while (starsLeft > 0) {
     const count = Math.min(starsLeft, 100);
@@ -21,7 +31,12 @@ export async function fetchStargazers(repoOrg, repoName, starCount) {
   return allStargazers;
 }
 
-function fetchPage(repoOrg, repoName, count, cursor) {
+async function fetchPage(
+  repoOrg: string,
+  repoName: string,
+  count: number,
+  cursor: number | null
+): Promise<[number, Stargazer[]]> {
   const query = `{
     repository(owner: "${repoOrg}", name: "${repoName}") {
       stargazers(first: ${count}${cursor ? `, after: "${cursor}"` : ""}) {
@@ -43,31 +58,28 @@ function fetchPage(repoOrg, repoName, count, cursor) {
     );
   }
 
-  return fetch("https://api.github.com/graphql", {
+  const res = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       authorization: "token " + process.env.REMOTION_GITHUB_TOKEN,
     },
     body: JSON.stringify({ query }),
-  })
-    .then((res) => {
-      if (!res.ok) {
-        return res.text().then((textResponse) => {
-          throw Error(`HTTP ${res.status} ${res.statusText}: ${textResponse}`);
-        });
-      }
-      return res.json();
-    })
-    .then((res) => {
-      const { edges } = res.data.repository.stargazers;
-      const lastCursor = edges[edges.length - 1].cursor;
-      const page = edges.map((edge) => ({
-        avatarUrl: edge.node.avatarUrl,
-        date: edge.starredAt,
-        name: edge.node.name || edge.node.login,
-      }));
-      return [lastCursor, page];
-    })
-    .catch((e) => console.error(e));
+  });
+  if (!res.ok) {
+    return res.text().then((textResponse) => {
+      throw Error(`HTTP ${res.status} ${res.statusText}: ${textResponse}`);
+    });
+  }
+  const res_1 = await res.json();
+  const { edges } = res_1.data.repository.stargazers;
+  const lastCursor: number = edges[edges.length - 1].cursor;
+  const page: Stargazer[] = edges.map((edge: any): Stargazer => {
+    return {
+      avatarUrl: edge.node.avatarUrl,
+      date: edge.starredAt,
+      name: edge.node.name || edge.node.login,
+    };
+  });
+  return [lastCursor, page];
 }

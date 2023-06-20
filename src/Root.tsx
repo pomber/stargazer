@@ -1,12 +1,13 @@
+import React from "react";
 import {
+  cancelRender,
   Composition,
   continueRender,
   delayRender,
   getInputProps,
-  registerRoot,
 } from "remotion";
-import { Video } from "./video";
-import { fetchStargazers } from "./fetch";
+import { Main } from "./Content";
+import { fetchStargazers, Stargazer } from "./fetch";
 
 const FPS = 30;
 
@@ -16,24 +17,29 @@ const defaultProps = {
   starCount: 100,
   duration: 15,
 };
+
 const inputProps = { ...defaultProps, ...getInputProps() };
 
-function RemotionVideo() {
+export function RemotionVideo() {
   const [handle] = React.useState(() => delayRender());
-  const [stargazers, setStargazers] = React.useState([]);
+  const [stargazers, setStargazers] = React.useState<Stargazer[] | null>(null);
 
   React.useEffect(() => {
     const { repoOrg, repoName, starCount } = inputProps;
-    fetchStargazers(repoOrg, repoName, starCount).then((stargazers) => {
-      setStargazers(stargazers);
-      continueRender(handle);
-    });
+    fetchStargazers(repoOrg, repoName, starCount)
+      .then((stargazers) => {
+        setStargazers(stargazers);
+        continueRender(handle);
+      })
+      .catch((err) => {
+        cancelRender(err);
+      });
   }, [handle]);
 
   return (
     <Composition
       id="main"
-      component={Video}
+      component={Main}
       durationInFrames={FPS * inputProps.duration}
       fps={FPS}
       width={960}
@@ -45,5 +51,3 @@ function RemotionVideo() {
     />
   );
 }
-
-registerRoot(RemotionVideo);

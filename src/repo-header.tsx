@@ -1,6 +1,14 @@
 import "./gh-styles.css";
 
-export function RepoHeader({ stars, org, name }) {
+export function RepoHeader({
+  stars,
+  org,
+  name,
+}: {
+  stars: number;
+  org: string;
+  name: string;
+}) {
   return (
     <div
       className="d-flex mb-3 px-3 px-md-4 px-lg-5"

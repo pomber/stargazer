@@ -1,59 +1,67 @@
-import React from "react";
-
 const { sqrt, exp, sin, cos, pow } = Math;
 
-export function useProgress(frame, totalFrames, totalStars, fps) {
-  const table = useTable(totalFrames, totalStars, fps);
+export function getProgress(
+  frame: number,
+  totalFrames: number,
+  totalStars: number,
+  fps: number
+) {
+  const table = getTable(totalFrames, totalStars, fps);
   if (frame >= table.length - 1) {
     return totalStars;
   }
   return table[frame][2];
 }
 
-function useTable(totalFrames, totalStars, fps) {
-  return React.useMemo(() => {
-    const table = [];
-    let px = 0;
-    let pv = 0;
-    for (let frame = 0; frame < totalFrames; frame++) {
-      const target = Math.ceil(
-        easeInOutCubic(frame / (totalFrames - 1)) * totalStars
-      );
-      const { x, v } = spring({
-        x0: px,
-        v0: pv,
-        t0: 0,
-        t: 1000 / fps,
-        k: 170, // stiffness
-        c: 26, // damping
-        m: 1, // mass
-        X: target,
-      });
-      px = x;
-      pv = v;
-      table.push([frame, target, x]);
-    }
-    // console.table(table);
-    return table;
-  }, [totalFrames, totalStars, fps]);
+function getTable(totalFrames: number, totalStars: number, fps: number) {
+  const table = [];
+  let px = 0;
+  let pv = 0;
+  for (let frame = 0; frame < totalFrames; frame++) {
+    const target = Math.ceil(
+      easeInOutCubic(frame / (totalFrames - 1)) * totalStars
+    );
+    const { x, v } = spring({
+      x0: px,
+      v0: pv,
+      t0: 0,
+      t: 1000 / fps,
+      k: 170, // stiffness
+      c: 26, // damping
+      m: 1, // mass
+      X: target,
+    });
+    px = x;
+    pv = v;
+    table.push([frame, target, x]);
+  }
+  // console.table(table);
+  return table;
 }
-function easeInOutQuad(x) {
-  return x < 0.5 ? 2 * x * x : 1 - pow(-2 * x + 2, 2) / 2;
-}
-function easeInOutCubic(x) {
+function easeInOutCubic(x: number) {
   return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
-}
-function easeInOutSine(x) {
-  return -(Math.cos(Math.PI * x) - 1) / 2;
-}
-function easeInOutCirc(x) {
-  return x < 0.5
-    ? (1 - sqrt(1 - pow(2 * x, 2))) / 2
-    : (sqrt(1 - pow(-2 * x + 2, 2)) + 1) / 2;
 }
 
 // from  https://github.com/pomber/use-spring/blob/master/src/spring.ts
-function spring({ x0, v0, t0, t, k, c, m, X }) {
+function spring({
+  x0,
+  v0,
+  t0,
+  t,
+  k,
+  c,
+  m,
+  X,
+}: {
+  x0: number;
+  v0: number;
+  t0: number;
+  t: number;
+  k: number;
+  c: number;
+  m: number;
+  X: number;
+}) {
   const dx = x0 - X;
   const dt = (t - t0) / 1000;
   const radicand = c * c - 4 * k * m;

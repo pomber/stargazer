@@ -1,18 +1,30 @@
-import { useCurrentFrame, useVideoConfig } from "remotion";
+import { Img, useCurrentFrame, useVideoConfig } from "remotion";
+import { Stargazer } from "./fetch";
+import { getProgress } from "./nerd";
 import { RepoHeader } from "./repo-header";
-import { useProgress } from "./nerd";
-import { Img } from "remotion";
 
 const W = 1280 / 2.5;
 const H = 720 / 2.5;
 
-export function Video({ repoOrg, repoName, starCount, stargazers }) {
+export function Main({
+  repoOrg,
+  repoName,
+  stargazers,
+}: {
+  repoOrg: string;
+  repoName: string;
+  stargazers: Stargazer[] | null;
+}) {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
 
   const extraEnding = 1 * fps;
 
-  const progress = useProgress(
+  if (!stargazers) {
+    return null;
+  }
+
+  const progress = getProgress(
     frame,
     durationInFrames - extraEnding,
     stargazers.length,
@@ -29,7 +41,17 @@ export function Video({ repoOrg, repoName, starCount, stargazers }) {
   );
 }
 
-function Content({ stargazers, repoOrg, repoName, progress }) {
+function Content({
+  stargazers,
+  repoOrg,
+  repoName,
+  progress,
+}: {
+  stargazers: any[];
+  repoOrg: string;
+  repoName: string;
+  progress: number;
+}) {
   const gap = 102;
   const startY = 76 - gap;
   const dy = progress * gap;
@@ -50,8 +72,6 @@ function Content({ stargazers, repoOrg, repoName, progress }) {
     >
       {stargazers.map((stargazer, index) => {
         const isHidden = Math.abs(index - progress) > 3;
-        // const grow =
-        //   index + 1 > progress ? 1 : Math.max(0, index + 2 - progress);
         const grow = 0;
         const opacity = Math.min(0.1 + progress - index, 1);
         return isHidden ? null : (
@@ -83,6 +103,15 @@ function StarBox({
   starNumber,
   grow,
   opacity,
+}: {
+  avatarUrl: string;
+  name: string;
+  date: string;
+  repoName: string;
+  y: number;
+  starNumber: number;
+  grow: number;
+  opacity: number;
 }) {
   const d = new Date(date);
   const dateString = d.toLocaleDateString("en-US", {
