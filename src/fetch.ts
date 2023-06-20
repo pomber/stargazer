@@ -80,6 +80,16 @@ async function fetchPage({
 	}
 
 	const json = (await res.json()) as GitHubApiResponse;
+	if ('errors' in json) {
+		if (json.errors[0].type === 'RATE_LIMITED') {
+			console.log('Rate limit exceeded, waiting 1 minute...');
+			await new Promise((resolve) => {
+				setTimeout(resolve, 60 * 1000);
+			});
+			return fetchPage({repoOrg, repoName, count, cursor});
+		}
+		throw new Error(JSON.stringify(json.errors));
+	}
 	if (!json.data) {
 		throw new Error(JSON.stringify(json));
 	}
@@ -95,17 +105,21 @@ async function fetchPage({
 	return {cursor: lastCursor, page};
 }
 
-interface GitHubApiResponse {
-	data: {
-		repository: {
-			stargazers: {
-				edges: Edge[];
+type GitHubApiResponse =
+	| {
+			data: {
+				repository: {
+					stargazers: {
+						edges: Edge[];
+					};
+				};
 			};
-		};
-	};
-}
+	  }
+	| {
+			errors: ApiError[];
+	  };
 
-interface Edge {
+type Edge = {
 	starredAt: string;
 	node: {
 		avatarUrl: string;
@@ -113,4 +127,14 @@ interface Edge {
 		login: string;
 	};
 	cursor: string;
-}
+};
+
+type ApiError =
+	| {
+			type: 'RATE_LIMITED';
+			message: string;
+	  }
+	| {
+			type: string;
+			message: string;
+	  };
