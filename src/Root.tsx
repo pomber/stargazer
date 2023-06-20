@@ -1,18 +1,10 @@
-import {useCallback} from 'react';
-import {CalculateMetadataFunction, Composition} from 'remotion';
-import {Main, MainProps, mainSchema} from './Main';
-import {fetchStargazers} from './fetch';
-import {waitForNoInput} from './wait-for-no-input';
+import { useCallback } from 'react';
+import { CalculateMetadataFunction,Composition } from 'remotion';
+import { Main,MainProps,mainSchema } from './Main';
+import { fetchStargazers } from './fetch';
+import { waitForNoInput } from './wait-for-no-input';
 
 const FPS = 30;
-
-const defaultProps: MainProps = {
-	repoOrg: 'code-hike',
-	repoName: 'codehike',
-	starCount: 100,
-	duration: 15,
-	stargazers: null,
-};
 
 export function RemotionVideo() {
 	const calculateMetadata: CalculateMetadataFunction<MainProps> = useCallback(
@@ -30,8 +22,8 @@ export function RemotionVideo() {
 				props: {
 					...props,
 					stargazers,
-					duration: props.duration * FPS,
 				},
+				durationInFrames: props.duration * FPS,
 			};
 		},
 		[]
@@ -41,13 +33,19 @@ export function RemotionVideo() {
 		<Composition
 			id="main"
 			component={Main}
-			durationInFrames={15 * 30}
+			durationInFrames={15 * FPS}
 			fps={FPS}
 			width={960}
 			height={540}
 			schema={mainSchema}
 			calculateMetadata={calculateMetadata}
-			defaultProps={defaultProps}
+			defaultProps={{
+				repoOrg: 'mrousavy',
+				repoName: 'react-native-vision-camera',
+				starCount: 4000,
+				duration: 15,
+				stargazers: null,
+			}}
 		/>
 	);
 }

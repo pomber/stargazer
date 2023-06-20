@@ -1,12 +1,4 @@
-import {z} from 'zod';
-
-export const stargazerSchema = z.object({
-	avatarUrl: z.string(),
-	name: z.string(),
-	date: z.string(),
-});
-
-export type Stargazer = z.infer<typeof stargazerSchema>;
+import {QueryResult, Stargazer, getFromCache, saveResult} from './cache';
 
 export async function fetchStargazers({
 	repoOrg,
@@ -60,7 +52,12 @@ async function fetchPage({
 	count: number;
 	cursor: string | null;
 	abortSignal: AbortSignal;
-}): Promise<{cursor: string; results: Stargazer[]}> {
+}): Promise<QueryResult> {
+	const cache = getFromCache({repoOrg, repoName, count, cursor});
+	if (cache) {
+		return cache;
+	}
+
 	const query = `{
 		repository(owner: "${repoOrg}", name: "${repoName}") {
 			stargazers(first: ${count}${cursor ? `, after: "${cursor}"` : ''}) {
@@ -99,6 +96,7 @@ async function fetchPage({
 	}
 
 	const json = (await res.json()) as GitHubApiResponse;
+
 	if ('errors' in json) {
 		if (json.errors[0].type === 'RATE_LIMITED') {
 			console.log('Rate limit exceeded, waiting 1 minute...');
@@ -109,11 +107,9 @@ async function fetchPage({
 		}
 		throw new Error(JSON.stringify(json.errors));
 	}
-	if (!json.data) {
-		throw new Error(JSON.stringify(json));
-	}
 	const {edges} = json.data.repository.stargazers;
 	const lastCursor = edges[edges.length - 1].cursor;
+
 	const page: Stargazer[] = edges.map((edge) => {
 		return {
 			avatarUrl: edge.node.avatarUrl,
@@ -121,7 +117,11 @@ async function fetchPage({
 			name: edge.node.name || edge.node.login,
 		};
 	});
-	return {cursor: lastCursor, results: page};
+
+	const result = {cursor: lastCursor, results: page};
+	saveResult({repoOrg, repoName, count, cursor, result});
+
+	return result;
 }
 
 type GitHubApiResponse =

@@ -1,5 +1,5 @@
 import {Img, useVideoConfig} from 'remotion';
-import {Stargazer} from './fetch';
+import {Stargazer} from './cache';
 import {RepoHeader} from './repo-header';
 
 const W = 1280 / 2.5;
