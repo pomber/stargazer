@@ -29,14 +29,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Install dependencies (ffmpeg and fonts)
+      - name: Install Fallback fonts (fonts)
         run: |
           sudo apt-get update -yqq
           sudo apt-get install -yq --no-install-recommends \
             fonts-noto-core fonts-noto-cjk fonts-noto-color-emoji fonts-noto-mono
       - name: Install dependencies (node modules)
         run: npm i
-      - name: Inject configurations
+      - name: Define input props
         run: echo $WORKFLOW_INPUT | tee input-props.json | jq -C '.' # Inject to file, inspect to logs
         env:
           WORKFLOW_INPUT: ${{ toJson(github.event.inputs) }}

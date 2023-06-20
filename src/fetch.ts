@@ -80,6 +80,9 @@ async function fetchPage({
 	}
 
 	const json = (await res.json()) as GitHubApiResponse;
+	if (!json.data) {
+		throw new Error(JSON.stringify(json));
+	}
 	const {edges} = json.data.repository.stargazers;
 	const lastCursor = edges[edges.length - 1].cursor;
 	const page: Stargazer[] = edges.map((edge) => {
