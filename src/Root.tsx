@@ -1,52 +1,50 @@
-import React from 'react';
-import {
-	cancelRender,
-	Composition,
-	continueRender,
-	delayRender,
-	getInputProps,
-} from 'remotion';
-import {fetchStargazers, Stargazer} from './fetch';
-import {Main} from './Main';
+import {useCallback} from 'react';
+import {CalculateMetadataFunction, Composition} from 'remotion';
+import {Main, MainProps, mainSchema} from './Main';
+import {fetchStargazers} from './fetch';
+import {waitForNoInput} from './wait-for-no-input';
 
 const FPS = 30;
 
-const defaultProps = {
-	repoOrg: 'code-hike',
-	repoName: 'codehike',
-	starCount: 100,
-	duration: 15,
-};
-
-const props = {...defaultProps, ...getInputProps()};
-
 export function RemotionVideo() {
-	const [handle] = React.useState(() => delayRender());
-	const [stargazers, setStargazers] = React.useState<Stargazer[] | null>(null);
+	const calculateMetadata: CalculateMetadataFunction<MainProps> = useCallback(
+		async ({props, abortSignal}) => {
+			await waitForNoInput(abortSignal, 500);
 
-	React.useEffect(() => {
-		const {repoOrg, repoName, starCount} = props;
-		fetchStargazers(repoOrg, repoName, starCount)
-			.then((stargazers) => {
-				setStargazers(stargazers);
-				continueRender(handle);
-			})
-			.catch((err) => {
-				cancelRender(err);
+			const stargazers = await fetchStargazers({
+				repoOrg: props.repoOrg,
+				repoName: props.repoName,
+				starCount: props.starCount,
+				abortSignal,
 			});
-	}, [handle]);
+
+			return {
+				props: {
+					...props,
+					stargazers,
+				},
+				durationInFrames: props.duration * FPS,
+			};
+		},
+		[]
+	);
 
 	return (
 		<Composition
 			id="main"
 			component={Main}
-			durationInFrames={FPS * props.duration}
+			durationInFrames={15 * FPS}
 			fps={FPS}
 			width={960}
 			height={540}
+			schema={mainSchema}
+			calculateMetadata={calculateMetadata}
 			defaultProps={{
-				...defaultProps,
-				stargazers,
+				repoOrg: 'code-hike',
+				repoName: 'codehike',
+				starCount: 100,
+				duration: 15,
+				stargazers: null,
 			}}
 		/>
 	);

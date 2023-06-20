@@ -1,3 +1,4 @@
-import {Config} from 'remotion'
+import {Config} from '@remotion/cli/config';
 
-Config.setImageFormat('jpeg')
+Config.setVideoImageFormat('jpeg');
+Config.setDelayRenderTimeoutInMilliseconds(1200000);

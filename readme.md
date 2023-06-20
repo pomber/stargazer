@@ -16,7 +16,7 @@ https://user-images.githubusercontent.com/1911623/121809549-93342a80-cc33-11eb-8
 
 ## Make your own video (local)
 
-1. [Generate a new repo from this template](https://github.com/pomber/stargazer/generate)
+1. [Use this repo as a template](https://github.com/pomber/stargazer/generate)
 
 2. Go to https://github.com/settings/personal-access-tokens/new and create a token with default settings. Create a `.env` file and add it:
 
@@ -30,8 +30,13 @@ REMOTION_GITHUB_TOKEN=github_pat_...
 npm i
 ```
 
-4. Adjust settings in `src/Root.tsx`
-5. Run `npm run build` to generate the video
+4. Start the preview:
+
+```
+npm start
+```
+
+5. Open the right sidebar, enter your repo name and click "Render".
 
 ## Credits
 

@@ -1,17 +1,20 @@
 import {useCurrentFrame, useVideoConfig} from 'remotion';
+import {z} from 'zod';
 import {Content} from './Content';
-import {Stargazer} from './fetch';
+import {stargazerSchema} from './cache';
 import {getProgress} from './utils';
 
-export function Main({
-	repoOrg,
-	repoName,
-	stargazers,
-}: {
-	repoOrg: string;
-	repoName: string;
-	stargazers: Stargazer[] | null;
-}) {
+export const mainSchema = z.object({
+	repoOrg: z.string(),
+	repoName: z.string(),
+	starCount: z.number().step(1),
+	duration: z.number().step(1),
+	stargazers: z.array(stargazerSchema).nullable(),
+});
+
+export type MainProps = z.infer<typeof mainSchema>;
+
+export function Main({repoOrg, repoName, stargazers}: MainProps) {
 	const frame = useCurrentFrame();
 	const {fps, durationInFrames} = useVideoConfig();
 
