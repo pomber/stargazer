@@ -34,14 +34,14 @@ export async function fetchStargazers({
 			abortSignal,
 		});
 
-		const {cursor: newCursor, page} = result;
-		allStargazers = [...allStargazers, ...page];
-		console.log('Fetched ', allStargazers.length, ' stars');
+		const {cursor: newCursor, results} = result;
+		allStargazers = [...allStargazers, ...results];
+		console.log(`Fetched ${allStargazers.length} stars`);
 		cursor = newCursor;
-		if (page.length < count) {
+		if (results.length < count) {
 			starsLeft = 0;
 		} else {
-			starsLeft -= page.length;
+			starsLeft -= results.length;
 		}
 	}
 
@@ -60,7 +60,7 @@ async function fetchPage({
 	count: number;
 	cursor: string | null;
 	abortSignal: AbortSignal;
-}): Promise<{cursor: string; page: Stargazer[]}> {
+}): Promise<{cursor: string; results: Stargazer[]}> {
 	const query = `{
 		repository(owner: "${repoOrg}", name: "${repoName}") {
 			stargazers(first: ${count}${cursor ? `, after: "${cursor}"` : ''}) {
@@ -121,7 +121,7 @@ async function fetchPage({
 			name: edge.node.name || edge.node.login,
 		};
 	});
-	return {cursor: lastCursor, page};
+	return {cursor: lastCursor, results: page};
 }
 
 type GitHubApiResponse =

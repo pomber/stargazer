@@ -5,9 +5,11 @@ export const waitForNoInput = (signal: AbortSignal, ms: number) => {
 	if (Internals.getRemotionEnvironment() === 'rendering') {
 		return Promise.resolve();
 	}
+
 	if (signal.aborted) {
 		return Promise.reject(new Error('stale'));
 	}
+
 	return Promise.race<void>([
 		new Promise<void>((_, reject) => {
 			signal.addEventListener('abort', () => {
