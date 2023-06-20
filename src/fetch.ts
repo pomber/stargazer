@@ -1,14 +1,24 @@
-export type Stargazer = {
-	avatarUrl: string;
-	name: string;
-	date: string;
-};
+import {z} from 'zod';
 
-export async function fetchStargazers(
-	repoOrg: string,
-	repoName: string,
-	starCount: number
-) {
+export const stargazerSchema = z.object({
+	avatarUrl: z.string(),
+	name: z.string(),
+	date: z.string(),
+});
+
+export type Stargazer = z.infer<typeof stargazerSchema>;
+
+export async function fetchStargazers({
+	repoOrg,
+	repoName,
+	starCount,
+	abortSignal,
+}: {
+	repoOrg: string;
+	repoName: string;
+	starCount: number;
+	abortSignal: AbortSignal;
+}) {
 	let starsLeft = starCount;
 	let cursor = null;
 	let allStargazers: Stargazer[] = [];
@@ -16,7 +26,13 @@ export async function fetchStargazers(
 	console.log('Fetching stars...');
 	while (starsLeft > 0) {
 		const count = Math.min(starsLeft, 100);
-		const result = await fetchPage({repoOrg, repoName, count, cursor});
+		const result = await fetchPage({
+			repoOrg,
+			repoName,
+			count,
+			cursor,
+			abortSignal,
+		});
 
 		const {cursor: newCursor, page} = result;
 		allStargazers = [...allStargazers, ...page];
@@ -37,11 +53,13 @@ async function fetchPage({
 	repoName,
 	count,
 	cursor,
+	abortSignal,
 }: {
 	repoOrg: string;
 	repoName: string;
 	count: number;
 	cursor: string | null;
+	abortSignal: AbortSignal;
 }): Promise<{cursor: string; page: Stargazer[]}> {
 	const query = `{
 		repository(owner: "${repoOrg}", name: "${repoName}") {
@@ -71,6 +89,7 @@ async function fetchPage({
 			'Content-Type': 'application/json',
 			authorization: `token ${process.env.REMOTION_GITHUB_TOKEN}`,
 		},
+		signal: abortSignal,
 		body: JSON.stringify({query}),
 	});
 
@@ -86,7 +105,7 @@ async function fetchPage({
 			await new Promise((resolve) => {
 				setTimeout(resolve, 60 * 1000);
 			});
-			return fetchPage({repoOrg, repoName, count, cursor});
+			return fetchPage({repoOrg, repoName, count, cursor, abortSignal});
 		}
 		throw new Error(JSON.stringify(json.errors));
 	}
