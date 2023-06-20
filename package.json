@@ -1,22 +1,26 @@
 {
-  "name": "stargazer",
-  "version": "1.0.0",
-  "scripts": {
-    "start": "remotion preview",
-    "build": "remotion render main out.mp4 --log verbose --timeout=1200000"
-  },
-  "license": "UNLICENSED",
-  "dependencies": {
-    "@remotion/bundler": "^3.3.101",
-    "@remotion/cli": "^3.3.101",
-    "@remotion/renderer": "^3.3.101",
-    "@types/react": "^18.2.13",
-    "express": "^4.18.2",
-    "prettier": "^2.2.1",
-    "prettier-plugin-organize-imports": "^1.1.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "remotion": "^3.3.101",
-    "typescript": "^5.1.3"
-  }
+	"name": "stargazer",
+	"version": "1.0.0",
+	"scripts": {
+		"start": "remotion preview",
+		"build": "remotion render main out.mp4 --log verbose --timeout=1200000",
+		"test": "eslint src --ext ts,tsx,js,jsx && tsc"
+	},
+	"license": "UNLICENSED",
+	"dependencies": {
+		"@remotion/bundler": "^3.3.101",
+		"@remotion/cli": "^3.3.101",
+		"@remotion/renderer": "^3.3.101",
+		"@remotion/eslint-config": "^3.3.101",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"remotion": "^3.3.101"
+	},
+	"devDependencies": {
+		"eslint": "^8.43.0",
+		"prettier": "^2.8.8",
+		"typescript": "5.1.3",
+		"prettier-plugin-organize-imports": "^3.2.2",
+		"@types/react": "^18.2.13"
+	}
 }

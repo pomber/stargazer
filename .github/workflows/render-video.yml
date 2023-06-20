@@ -12,11 +12,11 @@ on:
       starCount:
         description: "Star Count"
         required: true
-        default: 100
+        default: "100"
       duration:
         description: "Duration (seconds)"
         required: false
-        default: 15
+        default: "15"
 name: Render video
 jobs:
   render:
@@ -29,7 +29,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'npm'
+          cache: "npm"
       - name: Install dependencies (ffmpeg and fonts)
         run: |
           sudo apt-get update -yqq
@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies (node modules)
         run: npm i
       - name: Inject configurations
-        run: echo $WORKFLOW_INPUT | tee input-props.json | jq -C '.'  # Inject to file, inspect to logs
+        run: echo $WORKFLOW_INPUT | tee input-props.json | jq -C '.' # Inject to file, inspect to logs
         env:
           WORKFLOW_INPUT: ${{ toJson(github.event.inputs) }}
       - name: Render video
