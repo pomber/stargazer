@@ -34,7 +34,6 @@ jobs:
         run: |
           sudo apt-get update -yqq
           sudo apt-get install -yq --no-install-recommends \
-            ffmpeg \
             fonts-noto-core fonts-noto-cjk fonts-noto-color-emoji fonts-noto-mono
       - name: Install dependencies (node modules)
         run: npm i
@@ -50,4 +49,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: out.mp4
-          path: out.mp4
+          path: out/Main.mp4
