@@ -1,18 +1,14 @@
-import {z} from 'zod';
-
 export type QueryResult = {
 	cursor: string;
 	results: Stargazer[];
 };
 
-export const stargazerSchema = z.object({
-	avatarUrl: z.string(),
-	name: z.string(),
-	date: z.string(),
-	login: z.string(),
-});
-
-export type Stargazer = z.infer<typeof stargazerSchema>;
+export type Stargazer = {
+	avatarUrl: string;
+	name: string;
+	date: string;
+	login: string;
+};
 
 const makeKey = ({
 	count,
