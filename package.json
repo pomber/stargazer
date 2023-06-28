@@ -8,13 +8,13 @@
 	},
 	"license": "UNLICENSED",
 	"dependencies": {
-		"@remotion/bundler": "4.0.0-alpha18",
-		"@remotion/cli": "4.0.0-alpha18",
-		"@remotion/eslint-config": "4.0.0-alpha18",
-		"@remotion/renderer": "4.0.0-alpha18",
+		"@remotion/bundler": "4.0.0-alpha19",
+		"@remotion/cli": "4.0.0-alpha19",
+		"@remotion/eslint-config": "4.0.0-alpha19",
+		"@remotion/renderer": "4.0.0-alpha19",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"remotion": "4.0.0-alpha18",
+		"remotion": "4.0.0-alpha19",
 		"zod": "^3.21.4"
 	},
 	"devDependencies": {
