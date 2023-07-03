@@ -18,7 +18,7 @@ export async function fetchStargazers({
 	console.log('Fetching stars...');
 	while (starsLeft > 0) {
 		const count = Math.min(starsLeft, 100);
-		const result = await fetchPage({
+		const result: QueryResult = await fetchPage({
 			repoOrg,
 			repoName,
 			count,
