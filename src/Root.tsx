@@ -33,7 +33,6 @@ export function RemotionVideo() {
 		<Composition
 			id="main"
 			component={Main}
-			durationInFrames={15 * FPS}
 			fps={FPS}
 			width={960}
 			height={540}
