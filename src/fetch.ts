@@ -1,4 +1,4 @@
-import {QueryResult, Stargazer, getFromCache, saveResult} from './cache';
+import {getFromCache, QueryResult, saveResult, Stargazer} from './cache';
 
 export async function fetchStargazers({
 	repoOrg,
