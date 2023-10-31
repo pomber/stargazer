@@ -54,7 +54,7 @@ npm start
 6. Here you can see the progress of the rendering video. 
 <img src="https://user-images.githubusercontent.com/1911623/121809344-cf1ac000-cc32-11eb-93c3-cc6e58ff7988.png" width="720"/>
 
-6. By clicking on this you can get your Stargazer video. 
+7. By clicking on this you can get your Stargazer video. 
 <img src="https://user-images.githubusercontent.com/1911623/121809394-fb364100-cc32-11eb-8a82-e9a6d25f37cf.png" width="720"/>
 
 ## Credits
