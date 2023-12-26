@@ -60,3 +60,10 @@ npm start
 ## Credits
 
 Made with [Remotion](https://www.remotion.dev/)
+
+
+## License
+
+The code in this repository: Licensed under MIT.  
+The Remotion framework (a dependency of this project): Normally, companies need to obtain a paid license.  
+However, creating videos of this template [is accepted](https://github.com/pomber/stargazer/issues/19#issuecomment-1868469783) without needing a company license.
