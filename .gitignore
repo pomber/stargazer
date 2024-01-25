@@ -4,14 +4,4 @@ dist
 todo.md
 .env
 
-# Ignore the output video from Git but not videos you import into src/.
-*.mp4
-!src**/*.mp4
-*.mp3
-!src**/*.mp3
-*.webm
-!src**/*.webm
-*.aac
-!src**/*.aac
-*.wav
-!src**/*.wav
+build

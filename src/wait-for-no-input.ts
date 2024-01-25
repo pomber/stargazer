@@ -1,8 +1,8 @@
-import {Internals} from 'remotion';
+import {getRemotionEnvironment} from 'remotion';
 
 export const waitForNoInput = (signal: AbortSignal, ms: number) => {
 	// Don't wait during rendering
-	if (Internals.getRemotionEnvironment() === 'rendering') {
+	if (getRemotionEnvironment().isRendering) {
 		return Promise.resolve();
 	}
 
