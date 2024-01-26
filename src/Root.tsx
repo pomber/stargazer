@@ -6,7 +6,7 @@ import {waitForNoInput} from './wait-for-no-input';
 
 const FPS = 30;
 
-export function RemotionRoot() {
+export const RemotionRoot = () => {
 	const calculateMetadata: CalculateMetadataFunction<MainProps> = useCallback(
 		async ({props, abortSignal}) => {
 			await waitForNoInput(abortSignal, 500);
@@ -48,4 +48,4 @@ export function RemotionRoot() {
 			}}
 		/>
 	);
-}
+};
