@@ -26,7 +26,7 @@ export const RemotionRoot = () => {
 				durationInFrames: props.duration * FPS,
 			};
 		},
-		[]
+		[],
 	);
 
 	return (

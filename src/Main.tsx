@@ -31,7 +31,7 @@ export function Main({repoOrg, repoName, stargazers}: MainProps) {
 		frame,
 		durationInFrames - extraEnding,
 		stargazers.length,
-		fps
+		fps,
 	);
 
 	return (

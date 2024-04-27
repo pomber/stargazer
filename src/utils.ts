@@ -4,7 +4,7 @@ export function getProgress(
 	frame: number,
 	totalFrames: number,
 	totalStars: number,
-	fps: number
+	fps: number,
 ) {
 	const table = getTable(totalFrames, totalStars, fps);
 	if (frame >= table.length - 1) {
@@ -19,7 +19,7 @@ function getTable(totalFrames: number, totalStars: number, fps: number) {
 	let pv = 0;
 	for (let frame = 0; frame < totalFrames; frame++) {
 		const target = Math.ceil(
-			easeInOutCubic(frame / (totalFrames - 1)) * totalStars
+			easeInOutCubic(frame / (totalFrames - 1)) * totalStars,
 		);
 		const {x, v} = customSpring({
 			x0: px,
