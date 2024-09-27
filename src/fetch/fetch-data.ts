@@ -18,7 +18,7 @@ export async function fetchStargazers({
   console.log("Fetching stars...");
   if (!process.env.REMOTION_GITHUB_TOKEN) {
     console.error(
-      "No REMOTION_GITHUB_TOKEN environment variable found. Using the GitHub REST API instead of GraphQL, which has a lower rate-limit and does not have GitHub display names.",
+      "No REMOTION_GITHUB_TOKEN environment variable found. Using the GitHub REST API instead of GraphQL, which has a lower rate-limit and does not show the star dates.",
     );
 
     let page = 0;
