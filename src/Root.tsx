@@ -1,12 +1,12 @@
 import { useCallback } from "react";
 import { CalculateMetadataFunction, Composition } from "remotion";
-import { fetchStargazers } from "./fetch/fetch-data";
 import { Main, MainProps, mainSchema } from "./Main";
+import { fetchStargazers } from "./fetch/fetch-data";
 import { waitForNoInput } from "./wait-for-no-input";
 
 const FPS = 30;
 
-export const RemotionRoot = () => {
+export function RemotionVideo() {
   const calculateMetadata: CalculateMetadataFunction<MainProps> = useCallback(
     async ({ props, abortSignal }) => {
       await waitForNoInput(abortSignal, 500);
@@ -48,4 +48,4 @@ export const RemotionRoot = () => {
       }}
     />
   );
-};
+}
