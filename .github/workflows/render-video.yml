@@ -48,4 +48,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: out.mp4
-          path: out/Main.mp4
+          path: out/main.mp4
