@@ -41,7 +41,7 @@ jobs:
         env:
           WORKFLOW_INPUT: ${{ toJson(github.event.inputs) }}
       - name: Render video
-        run: npx remotion render --composition-id=main --props="./input-props.json"
+        run: npx remotion render --props="./input-props.json" main
         env:
           REMOTION_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload video
