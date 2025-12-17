@@ -11,17 +11,17 @@
     "@remotion/bundler": "^4.0.0",
     "@remotion/cli": "^4.0.0",
     "@remotion/renderer": "^4.0.0",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "remotion": "^4.0.0",
     "zod": "3.22.3"
   },
   "devDependencies": {
     "@remotion/eslint-config-flat": "^4.0.0",
-    "@types/react": "19.0.0",
+    "@types/react": "19.2.7",
     "eslint": "9.19.0",
     "prettier": "3.6.0",
-    "typescript": "5.8.2"
+    "typescript": "5.9.3"
   },
   "private": true
 }
