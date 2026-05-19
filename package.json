@@ -18,9 +18,14 @@
   },
   "devDependencies": {
     "@remotion/eslint-config-flat": "^4.0.0",
+    "@types/jest": "^30.0.0",
     "@types/react": "19.2.7",
+    "@types/react-dom": "^19.2.3",
     "eslint": "9.19.0",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
     "prettier": "3.8.1",
+    "ts-jest": "^29.4.9",
     "typescript": "5.9.3"
   },
   "private": true
